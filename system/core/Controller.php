@@ -66,6 +66,13 @@ class CI_Controller {
 	public $load;
 
 	/**
+	 * Set user info
+	 * 
+	 * @var string
+	 */
+	protected $username, $userid, $usergroup, $usertype;
+
+	/**
 	 * Class constructor
 	 *
 	 * @return	void

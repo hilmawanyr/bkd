@@ -9,10 +9,13 @@ class Home extends CI_Controller {
 		if (!$this->session->userdata('bkd_session')) {
 			redirect('auth','refresh');
 		}
+		$this->username = $this->session->userdata('bkd_session')['username'];
 	}
 
 	public function index()
 	{
+		$data['username']  = $this->username;
+		$data['pagename']  = 'Dashboard';
 		$data['page'] = 'home_v';
 		$this->load->view('template/template', $data);
 	}
