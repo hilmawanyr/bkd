@@ -56,3 +56,11 @@ $route['translate_uri_dashes'] = FALSE;
 $route['auth'] = 'auth';
 $route['login'] = 'auth/attemp_login';
 $route['logout'] = 'auth/logout';
+
+$route['pengajaran'] = 'pengajaran';
+$route['review-pengajaran'] = 'pengajaran/load_page';
+$route['daftar-pengajaran'] = 'pengajaran/daftar_pengajaran';
+$route['pengajaran-pertahun/(:num)'] = 'pengajaran/detail/$1';
+$route['ubah-pengajaran/(:num)'] = 'pengajaran/edit/$1';
+$route['update-pengajaran/(:num)'] = 'pengajaran/update/$1';
+$route['hapus-pengajaran/(:num)'] = 'pengajaran/remove/$1';
