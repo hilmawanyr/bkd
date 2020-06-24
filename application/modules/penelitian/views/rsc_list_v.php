@@ -30,7 +30,7 @@
               class="btn btn-sm bg-olive" 
               data-toggle="modal" 
               data-target="#myModal" 
-              onclick="load_detail(<?= $rsc->id ?>)">
+              onclick="load_detail(<?= $rsc->id ?>,'<?= $rsc->requirement.'-'.$rsc->attachment ?>')">
               <i class="fa fa-list"></i>
             </button>
           </span>
@@ -39,12 +39,27 @@
               class="btn btn-sm bg-orange" 
               data-toggle="modal" 
               data-target="#myModal" 
-              onclick="doc_upload(<?= $rsc->id ?>)">
+              onclick="doc_upload(<?= $rsc->id ?>,'<?= $rsc->requirement.'-'.$rsc->attachment ?>')">
               <i class="fa fa-upload"></i>
             </button>
           </span>
-          <button class="btn btn-sm bg-purple" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></button>
-          <button class="btn btn-sm bg-navy" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></button>
+          <span data-toggle="tooltip" title="Edit">
+            <button 
+              class="btn btn-sm bg-purple" 
+              data-toggle="modal" 
+              data-target="#myModal"
+              onclick="edit(<?= $rsc->id ?>)">
+              <i class="fa fa-pencil"></i>
+            </button>
+          </span>
+          <a 
+            href="<?= base_url('remove-rsc/'.$rsc->key) ?>" 
+            onclick="return confirm('Anda yakin ingin menghapus data ini?')" 
+            class="btn btn-sm bg-navy" 
+            data-toggle="tooltip" 
+            title="Delete">
+            <i class="fa fa-trash"></i>
+          </a>
         </td>
       </tr>
     <?php $no++; endforeach; ?>
@@ -64,11 +79,15 @@
     $('[data-toggle="tooltip"]').tooltip({trigger: "hover"});
   });
 
-  function load_detail(id) {
-    $('#content').load('<?= base_url('rsc-detail/') ?>' + id)
+  function load_detail(id,is_equal) {
+    $('#content').load('<?= base_url('rsc-detail/') ?>' + id + '/' + is_equal)
   }
 
-  function doc_upload(id) {
-    $('#content').load('<?= base_url('attach-doc/') ?>' + id)
+  function doc_upload(id, is_equal) {
+    $('#content').load('<?= base_url('attach-doc/') ?>' + id + '/' + is_equal)
+  }
+
+  function edit(id) {
+    $('#content').load('<?= base_url('edit/') ?>' + id)
   }
 </script>

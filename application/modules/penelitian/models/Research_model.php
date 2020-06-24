@@ -67,15 +67,16 @@ class Research_model extends CI_Model {
 	{
 		$data = $this->db->query("SELECT 
 									rsc.id, 
+									rsc.key,
 									rsc.judul, 
 									rsc.tahunakademik, 
 									prg.program, 
 									act.kegiatan, 
 									prm.parameter,
-									(SELECT COUNT(kode_dokumen) FROM dokumen_penelitian 
+									(SELECT COUNT(*) FROM dokumen_penelitian 
 									WHERE kode_kegiatan = rsc.kegiatan 
 									AND kode_param = rsc.param) AS requirement,
-									(SELECT COUNT(key_penelitian) FROM bukti_penelitian
+									(SELECT COUNT(*) FROM bukti_penelitian
 									WHERE key_penelitian = rsc.key
 									AND deleted_at IS NULL) AS attachment
 								FROM penelitian_dosen rsc
@@ -83,7 +84,8 @@ class Research_model extends CI_Model {
 								JOIN kegiatan_penelitian act ON rsc.kegiatan = act.kode_kegiatan
 								JOIN persentase_param_penelitian prm ON rsc.param = prm.kode_param
 								WHERE rsc.nid = '{$uid}'
-								AND rsc.tahunakademik = '{$year}'")->result();
+								AND rsc.tahunakademik = '{$year}'
+								AND rsc.deleted_at IS NULL")->result();
 		return $data;
 	}
 
@@ -91,11 +93,13 @@ class Research_model extends CI_Model {
 	{
 		$data = $this->db->query("SELECT 
 									rsc.id, 
+									rsc.key,
 									rsc.judul, 
 									rsc.tahunakademik, 
 									rsc.anggota,
 									rsc.durasi_progres,
 									rsc.sks,
+									rsc.program as kode_program,
 									prg.program, 
 									act.kegiatan, 
 									prm.parameter

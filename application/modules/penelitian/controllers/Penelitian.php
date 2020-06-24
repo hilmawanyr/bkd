@@ -64,7 +64,7 @@ class Penelitian extends CI_Controller {
     				}
     				$total_sks = ($sks[$i]*$final_sks[$j])/100;
 
-					$tahunajaran = guess_academic_year($tahunakademik[$i], ($j));
+					$tahunajaran = guess_academic_year($tahunakademik[$i], $j);
 
     				$dataRsc[] = [
 		    			'key' => md5($program[$i].$kegiatan[$i].$param[$i].$this->userid),
@@ -92,16 +92,20 @@ class Penelitian extends CI_Controller {
     	$this->load->view('rsc_list_v', $data);
     }
 
-    public function load_detail($id)
+    public function load_detail($id, $isEqual)
     {
+    	$is_equal = explode('-', $isEqual);
+    	$data['is_doc_complete'] = $is_equal[1] == 0 ? 0 : ($is_equal[0] != $is_equal[1] ? 1 : 2);
     	$data['rsc'] = $this->rsc->detail_rsc($id);
     	$this->load->view('rsc_modal_detail_v', $data);
     }
 
-    public function attach_file($id)
+    public function attach_file($id, $isEqual)
     {
     	$rsc = $this->rsc->get_research($id);
     	$data['doc_key'] = $rsc->key;
+    	$is_equal = explode('-', $isEqual);
+    	$data['is_doc_complete'] = $is_equal[1] == 0 ? 0 : ($is_equal[0] != $is_equal[1] ? 1 : 2);
     	$data['data'] = $this->rsc->proof_doc($rsc->kegiatan, $rsc->param);
     	$this->load->view('rsc_modal_upload_v', $data);
     }
@@ -119,11 +123,13 @@ class Penelitian extends CI_Controller {
     	$attachment = $this->input->post('attachment');
     	$doc_code = $this->input->post('doctype');
     	for ($i = 0; $i < count($attachment); $i++) {
-    		$data[] = [
-    			'kode_dokumen' => $doc_code[$i],
-    			'url' => $attachment[$i],
-    			'key_penelitian' => $doc_key
-     		];
+    		if (!empty($attachment[$i])) {
+    			$data[] = [
+	    			'kode_dokumen' => $doc_code[$i],
+	    			'url' => $attachment[$i],
+	    			'key_penelitian' => $doc_key
+	     		];	
+    		}
     	}
     	$this->db->insert_batch('bukti_penelitian', $data);
     	$this->session->set_flashdata('success', 'Bukti penelitian berhasil dilampirkan!');
@@ -138,6 +144,69 @@ class Penelitian extends CI_Controller {
     		redirect('penelitian','refresh');
     	}
     	return;
+    }
+
+    public function remove_research($key)
+    {
+    	$this->db->update('penelitian_dosen', ['deleted_at' => date('Y-m-d H:i:s')], ['key' => $key]);
+    	$this->session->set_flashdata('success', 'Penelitian berhasil dihapus!');
+    	redirect('penelitian','refresh');
+    }
+
+    public function edit($id)
+    {
+    	$data['rsc'] = $this->rsc->detail_rsc($id);
+    	$this->load->view('rsc_modal_edit_v', $data);
+    }
+
+    public function update()
+    {
+    	extract(PopulateForm());
+
+    	if (strlen($duration) > 1) {
+			$dataRsc = [
+    			'judul' => $judul,
+    			'kegiatan' => $kegiatan,
+    			'param' => $param,
+    			'sks' => $sks,
+    			'nid' => $this->userid,
+    			'anggota' => $member,
+    			'durasi_progres' => $duration
+    		];
+    		$this->db->update('penelitian_dosen', $dataRsc, ['key' => $keys]);
+		} else {
+			for ($j = 0; $j < (int)$duration; $j++) {
+
+				$this->db->delete('penelitian_dosen', ['key' => $keys]);
+				// credit persentage divider for each semester
+				if ($duration == 1) {
+					$final_sks = [100];
+				} elseif ($duration == 2) {
+					$final_sks = [40,60];
+				} else {
+					$final_sks = [30,30,40];
+				}
+				$total_sks = ($sks*$final_sks[$j])/100;
+
+				$tahunajaran = guess_academic_year(active_year()->kode_tahun, $j);
+
+				$dataRsc[] = [
+	    			'key' => $keys,
+	    			'judul' => $judul,
+	    			'tahunakademik' => $tahunajaran,
+	    			'program' => $program,
+	    			'kegiatan' => $kegiatan,
+	    			'param' => $param,
+	    			'sks' => $total_sks,
+	    			'nid' => $this->userid,
+	    			'anggota' => $member,
+	    			'durasi_progres' => $duration
+	    		];
+			}
+			$this->db->insert_batch('penelitian_dosen', $dataRsc);
+		}
+		$this->session->set_flashdata('success', 'Penelitian berhasil diubah!');
+    	redirect('penelitian','refresh');
     }
 
     /**

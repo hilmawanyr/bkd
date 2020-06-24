@@ -17,6 +17,8 @@
 						 	<a 
 						 		href="<?= base_url('remove-doc-link/'.$docs->kode.'/'.$doc_key) ?>" 
 						 		style="color: #001F3F"
+						 		data-toggle="tooltip"
+						 		title="Hapus lampiran"
 						 		onclick="return confirm('Anda yakin ingin menghapus data ini?')">
 						 		<i class="fa fa-trash"></i>
 						 	</a>
@@ -30,7 +32,16 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn bg-olive">Submit</button>
+		<?php if ($is_doc_complete == 0 || $is_doc_complete == 1) : ?>
+			<button type="submit" class="btn bg-olive">Submit</button>
+		<?php endif; ?>
+		
 		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	</div>
 </form>
+
+<script>
+	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip({ trigger: "hover" })
+	})
+</script>

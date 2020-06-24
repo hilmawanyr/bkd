@@ -3,9 +3,17 @@
 	<h4 class="modal-title">Detail Penelitian</h4>
 </div>
 <div class="modal-body">
-	<div class="callout callout-warning">
-		<p><strong>Perhatian!</strong> Anda belum melampirkan dokumen untuk penelitian ini.</p>
-	</div>
+	
+		<?php if ($is_doc_complete == 0) : ?>
+			<div class="callout callout-warning">
+				<p><strong>Perhatian!</strong> Anda belum melampirkan dokumen untuk penelitian ini.</p>
+			</div>
+		<?php elseif ($is_doc_complete == 1) : ?>
+			<div class="callout callout-warning">
+				<p><strong>Perhatian!</strong> Dokumen persyaratan belum lengkap.</p>
+			</div>
+		<?php endif; ?>
+
 	<form class="form-horizontal" id="temporaryform" method="post">
 		<div class="form-group">
 	        <label class="col-sm-2 control-label" for="judul">Judul</label>
