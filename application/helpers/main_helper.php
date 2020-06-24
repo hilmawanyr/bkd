@@ -44,3 +44,27 @@
 		$param = $CI->db->get_where('param_pengajaran_tambahan', ['kode' => $code])->row();
 		return $param;
 	}
+
+	function guess_academic_year($year, $i)
+	{
+		$prefix = substr($year, 0, 4);
+		$subfix = substr($year, 4, 1);
+
+		$added_smt = $i * 0.5;
+		if (($subfix % 2) == 1 && $added_smt < 1) {
+			$must_add = 0;
+		} elseif (($subfix % 2) == 0 && $added_smt < 1) {
+			$must_add = round($added_smt);
+		} elseif (($subfix % 2) == 0 && $added_smt > 0.5)  {
+			$must_add = ceil($added_smt);
+		} else {
+			$must_add = floor($added_smt);
+		}
+
+		$res_subfix = ($subfix + $i) % 2 == 1 ? 1 : 2;
+
+		$res_prefix = $prefix + $must_add;
+
+		$result = $res_prefix.$res_subfix;
+		return $result;
+	}

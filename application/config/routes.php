@@ -64,3 +64,17 @@ $route['pengajaran-pertahun/(:num)'] = 'pengajaran/detail/$1';
 $route['ubah-pengajaran/(:num)'] = 'pengajaran/edit/$1';
 $route['update-pengajaran/(:num)'] = 'pengajaran/update/$1';
 $route['hapus-pengajaran/(:num)'] = 'pengajaran/remove/$1';
+
+$route['penelitian'] = 'penelitian';
+$route['tambah-penelitian'] = 'penelitian/add';
+$route['program-penelitian/(:any)'] = 'penelitian/program_activity/$1';
+$route['parameter-penelitian/(:any)'] = 'penelitian/program_params/$1';
+$route['sks-penelitian/(:any)/(:any)'] = 'penelitian/set_sks/$1/$2';
+$route['set-duration-category/(:any)'] = 'penelitian/duration_category/$1';
+$route['temp-rsc-table'] = 'penelitian/loadTable';
+$route['temp-research'] = 'penelitian/temporaryResearch';
+$route['rm-temp-row/(:num)'] = 'penelitian/deleteList/$1';
+$route['rsc-detail/(:num)'] = 'penelitian/load_detail/$1';
+$route['attach-doc/(:num)'] = 'penelitian/attach_file/$1';
+$route['submit-doc/(:any)'] = 'penelitian/submit_attachment/$1';
+$route['remove-doc-link/(:any)/(:any)'] = 'penelitian/remove_link/$1/$2';
