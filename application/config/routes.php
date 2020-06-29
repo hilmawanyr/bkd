@@ -81,3 +81,11 @@ $route['remove-doc-link/(:any)/(:any)'] = 'penelitian/remove_link/$1/$2';
 $route['remove-rsc/(:any)'] = 'penelitian/remove_research/$1';
 $route['edit/(:num)'] = 'penelitian/edit/$1';
 $route['update-rsc'] = 'penelitian/update';
+
+$route['pengabdian'] = 'pengabdian';
+$route['dev-program/(:any)'] = 'pengabdian/get_devotion_program/$1';
+$route['dev-param/(:any)'] = 'pengabdian/get_devotion_param/$1';
+$route['dev-credit/(:any)/(:any)'] = 'pengabdian/set_devotion_credit/$1/$2';
+$route['dev-temp-data'] = 'pengabdian/temporaryDevotion';
+$route['load-dev-temp'] = 'pengabdian/load_devotion_temp_table';
+$route['remove-temp-dev/(:num)'] = 'pengabdian/delete_temp_devotion/$1';
