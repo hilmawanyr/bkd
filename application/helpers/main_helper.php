@@ -68,3 +68,12 @@
 		$result = $res_prefix.$res_subfix;
 		return $result;
 	}
+
+	function list_year()
+	{
+		$CI =& get_instance();
+		$http_header = ['x-bkd-key: '.APP_KEY, 'Content-Type: application/json'];
+		$hostapi = ENVIRONMENT == 'development' ? DEV_HOST_ENDPOINT : PRO_HOST_ENDPOINT;
+		$years = $CI->curl_lib->exec_curl($hostapi.'/api_bkd/year_list', $http_header);
+		return json_decode($years);
+	}

@@ -1,14 +1,14 @@
 <?php $this->load->view('template/message_alert'); ?>
 <br>
-<form class="form-horizontal" id="temporaryform2" method="post">
+<form class="form-horizontal" onsubmit="submitForm(event)" id="temporaryform2">
 	
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Jenis Pengabdian</label>
 		<div class="col-md-10">
-			<select class="form-control" name="devotion" id="devotion" required>
+			<select class="form-control" name="devotion" id="devotion" required="">
 				<option disabled selected value="">-- Pilih Jenis --</option>
 				<?php foreach ($devotionType as $devotion) {
-					echo '<option value="'.$devotion->kode.'-'.$devotion->group_param.'">'.$devotion->nama.'</option>  ';
+					echo '<option value="'.$devotion->kode.'">'.$devotion->nama.'</option>  ';
 				} ?>
 			</select>
 		</div>
@@ -17,7 +17,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Program Pengabdian</label>
 		<div class="col-md-10">
-			<select class="form-control" name="devProgram" id="devProgram" required>
+			<select class="form-control" name="devProgram" id="devProgram" required="">
 				<option disabled selected value="">-- Pilih Program --</option>
 				
 			</select>
@@ -27,7 +27,7 @@
 	<div class="form-group" id="param-types">
 		<label class="col-sm-2 control-label">Peran</label>
 		<div class="col-md-10">
-			<select class="form-control" name="devParam" id="devParam" required>
+			<select class="form-control" name="devParam" id="devParam" required="">
 				<option disabled="" selected="" value="">-- Pilih Peran --</option>
 				
 			</select>
@@ -48,13 +48,13 @@
 	</div>
 	
 	<center>
-		<button class="btn btn-success" id="addDev"><i class="fa fa-plus"></i> Tambah Pengabdian</button>
+		<button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Tambah Pengabdian</button>
 	</center>
 </form>
 
 <hr>
 
-<form class="form-horizontal" action="" method="post">
+<form class="form-horizontal" action="<?= base_url('add-dev') ?>" method="post">
 	<h3><i class="icon icon-list"></i> Daftar Pengabdian</h3>
 	<br>
 	<table id="example99" class="table table-bordered table-striped">
@@ -85,38 +85,34 @@
 		$('[data-toggle="tooltip"]').tooltip();
 		// get kegiatn program
 		$('#devotion').change(function(){
-			$.post('<?= base_url('dev-program/') ?>'+$(this).val().split('-')[0],{},function(get){
+			$.post('<?= base_url('dev-program/') ?>'+$(this).val(),{},function(get){
 				$('#devProgram').html(get);
 			});
 
-			$.post('<?= base_url('dev-param/') ?>'+$(this).val().split('-')[1],{},function(res){
-				$('#devParam').html(res);
-			});
-
-			if ($(this).val().split('-')[1] === '') {
-				$('#param-types').hide('fast');
-			} else {
-				$('#param-types').show('fast');
-			}
-
 			// reset credit column every devotion type changed
 			$('#devCredit').val('');
+			$('#devParam').val('');
 		});
 
-		// get parameter program
-		$('#devProgram').change(function(){
-			if ($(this).val().split('x')[1] === 'NIL') {
-				$('#devCredit').val($(this).val().split('x')[2]);
-			} else {
-				$('#devCredit').val('');
-			}
-		});
-
-		$('#devParam,#devProgram').change(function() {
-			$.post('<?= base_url('dev-credit/') ?>'+$('#devProgram').val().split('x')[0]+'/'+$('#devParam').val(),{},function(res){
-				$('#devCredit').val(res);
+		$('#devProgram').change(function() {
+			$.post('<?= base_url('dev-param/') ?>'+$(this).val(),{},function(res){
+				if (res < 7) {
+					$('#param-types').hide('fast');
+					$('#devCredit').val(res);
+					$('#devParam').removeAttr("required","required");
+				} else {
+					$('#param-types').show('fast');
+					$('#devParam').html(res);
+					$('#devParam').attr("required","true");
+				}
 			});
-		});
+		})
+
+		$('#devParam').change(function() {
+			$.post('<?= base_url('dev-credit/') ?>' + $('#devProgram').val() + '/' + $(this).val(), {}, function(res) {
+				$('#devCredit').val(res);
+			})
+		})
 
 	})
 
@@ -126,34 +122,32 @@
 		});
 	}
 
-	$(function () {
-		$('#addDev').click(function (e) {
-			if ($('#devProgram,#devotion,#devYear').val() === '') {
-				alert('Tidak boleh ada kolom yang dikosongkan!');
-				return;
+	function submitForm(e) {
+		if ($('#devProgram,#devotion').val() === '') {
+			alert('Tidak boleh ada kolom yang dikosongkan!');
+			return;
+		}
+
+		$('#submitBtn').removeAttr('disabled')
+		if ($('.additionalRows').length === 3) {
+        	$('#submitBtn').attr("disabled","");
+        }
+
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url('dev-temp-data'); ?>',
+			data: $('#temporaryform2').serialize(),
+			error: function (xhr, ajaxOption, thrownError) {
+				return false;
+			},
+			success: function () {
+				getTable();
+				$('#toRemoves').hide();
+				$('#devotion,#devProgram,#devParam,#devCredit').val('');
 			}
-
-			$('#submitBtn').removeAttr('disabled')
-			if ($('.additionalRows').length === 3) {
-            	$('#submitBtn').attr("disabled","");
-            }
-
-			$.ajax({
-				type: 'POST',
-				url: '<?= base_url('dev-temp-data'); ?>',
-				data: $('#temporaryform2').serialize(),
-				error: function (xhr, ajaxOption, thrownError) {
-					return false;
-				},
-				success: function () {
-					getTable();
-					$('#toRemoves').hide();
-					$('#devotion,#devProgram,#devParam,#devCredit').val('');
-				}
-			});
-			e.preventDefault();
 		});
-	});
+		e.preventDefault();
+	};
 
 	function rmData(id) {
 	    $.ajax({

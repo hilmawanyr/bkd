@@ -5,7 +5,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="<?=  base_url('/') ?>" data-toggle="tooltip" title="Kembali ke beranda">Dashboard</a></li>
-    <li><a href="javascript:void(0);">Pengabdian</a></li>
+    <li><a href="javascript:void(0);" onclick="load_page">Pengabdian</a></li>
   </ol>
 </section>
 
@@ -28,7 +28,9 @@
 
           <div class="tab-pane" id="review-component">
             <section id="review-content">
-              
+              <center>
+                <img src="<?= base_url('assets/img/loading.gif') ?>" style="width: 30%" />
+              </center>
             </section>
           </div>
         </div>
@@ -40,6 +42,6 @@
 
 <script>
   function load_page () {
-    $('#review-content').load('<?= base_url('pengabdian/daftar_pengabdian') ?>')
+    $('#review-content').load('<?= base_url('load-dev-list') ?>')
   }
 </script>
