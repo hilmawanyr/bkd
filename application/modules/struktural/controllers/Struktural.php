@@ -25,7 +25,6 @@ class Struktural extends CI_Controller {
 		$data['username']  = $this->username;
 		$data['pagename']  = 'Dashboard';
 
-
 		$jabatan = $this->data->findAll('jabatan_struktural');
 
 		$data['jabatan'] = $jabatan->result();
@@ -54,8 +53,6 @@ class Struktural extends CI_Controller {
 			'created_at' => date('Y-m-d H:i:s'),
 		];
 
-
-
 		if ($exist) {
 			$res = $this->data->update($this->table, $data, $condition);
 		}else{
@@ -81,7 +78,8 @@ class Struktural extends CI_Controller {
 		if ($data->num_rows() > 0) {
 			$data = $data->row();
 
-			$jabatan = $this->data->find('jabatan_struktural', $data->id_jabatan);
+			$where = ['kode' => $data->kode_jabatan];
+			$jabatan = $this->data->find('jabatan_struktural', $where);
 
 			if ($jabatan->num_rows() > 0 ) {
 				$data->jabatan = $jabatan->row()->jabatan;
@@ -92,7 +90,6 @@ class Struktural extends CI_Controller {
 			$response["code"]    = 200;
 			$response["message"] = "Success";
 			$response["data"]    = $data;
-			
 		}
 		
 		echo json_encode($response);

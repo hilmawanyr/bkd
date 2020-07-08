@@ -1,38 +1,54 @@
-<?php $this->load->view('template/message_alert'); ?>
+<section class="content-header">
+	<h1>Tugas Tambahan Dosen <small>Kelola data tugas tambahan</small></h1>
+	<ol class="breadcrumb">
+		<li><a href="<?=  base_url('/') ?>" data-toggle="tooltip" title="Kembali ke beranda">Dashboard</a></li>
+		<li><a href="javascript:void(0);">Tugas Tambahan</a></li>
+	</ol>
+</section>
 
-<h3>
-	<i class="fa fa-copy"></i> Tugas Tambahan Dosen Tahun Akademik 
-	<span data-toggle="tooltip" title="lihat rincian lain-lain">
-		<a href="#otherInfo" data-toggle="modal" onclick="load_structural_position()">
-			<i class="fa fa-eye"></i>
-		</a>
-	</span>
-</h3>
-<br>
-<form class="form-horizontal" action="<?= base_url('struktural/store') ?>" method="post">
-	<div class="control-group">
-		<label for="position" class="control-label">Jabatan Struktural</label>
-		<div class="controls">
-			<select name="position" id="position" class="form-control span4">
-				<option disabled="" selected="" value="">-- Pilih Jabatan --</option>
-				<?php foreach ($jabatan as $other) { ?>
-					<option value="<?= $other->id.'-'.$other->sks ?>"><?= $other->jabatan ?></option>
-				<?php } ?>
-			</select>
+<section class="content">
+  	<div class="row">
+    	<div class="col-xs-12">
+			<div class="box box-primary">
+				<?php $this->load->view('template/message_alert'); ?>
+			    <div class="box-header with-border">
+			      	<h3 class="box-title">Tambah Data</h3>
+			    </div>
+
+			    <div class="box-body">
+			      	<form class="form-horizontal" action="<?= base_url('struktural/store') ?>" method="post">
+						<div class="form-group">
+							<label for="position" class="col-sm-2 control-label">Jabatan Struktural</label>
+							<div class="col-sm-10">
+								<select name="position" id="position" class="form-control" required="">
+									<option disabled="" selected="" value="">-- Pilih Jabatan --</option>
+									<?php foreach ($jabatan as $other) { ?>
+										<option value="<?= $other->id.'-'.$other->sks ?>"><?= $other->jabatan ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="sks" class="col-sm-2 control-label">Beban SKS</label>
+							<div class="col-sm-10">
+								<input type="text" name="sks" readonly="" value="" id="sks" class="form-control" placeholder="SKS">
+							</div>
+						</div>
+					</form>
+			    </div>
+
+			    <div class="box-footer text-center">
+					<button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Tambah</button>
+					<a href="#otherInfo" class="btn bg-olive" data-toggle="modal" onclick="load_structural_position()">
+						<i class="fa fa-eye"></i> Lihat Data Tersimpan
+					</a>
+			    </div>
+			</div>
 		</div>
 	</div>
-	
-	<div class="control-group">
-		<label for="sks" class="control-label">Beban SKS</label>
-		<div class="controls">
-			<input type="text" name="sks" readonly="" value="" id="sks" class="form-control span1" placeholder="SKS">
-		</div>
-	</div>
-	
-	<div class="control-group" style="margin-top: 5px;">
-		<button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Tambah</button>
-	</div>
-</form>
+</section>
+
 
 <div id="otherInfo" class="modal fade" role="dialog">
 	<div class="modal-dialog modal-lg">
