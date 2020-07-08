@@ -95,3 +95,7 @@ $route['dev-edit/(:num)'] = 'pengabdian/edit/$1';
 $route['update-dev'] = 'pengabdian/update';
 $route['remove-dev/(:num)'] = 'pengabdian/remove/$1';
 $route['dev-by-year/(:any)'] = 'pengabdian/dev_on_year/$1';
+
+$route['form'] = 'form';
+$route['set-form-year'] = 'form/set_opt';
+$route['print-form'] = 'form/print_out_form';

@@ -69,6 +69,7 @@ class Research_model extends CI_Model {
 									rsc.id, 
 									rsc.key,
 									rsc.judul, 
+									rsc.sks,
 									rsc.tahunakademik, 
 									prg.program, 
 									act.kegiatan, 
