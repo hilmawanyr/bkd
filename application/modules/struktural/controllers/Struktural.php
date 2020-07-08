@@ -81,6 +81,8 @@ class Struktural extends CI_Controller {
 			$where = ['kode' => $data->kode_jabatan];
 			$jabatan = $this->data->find('jabatan_struktural', $where);
 
+			$data->nama_tahunakademik = year_name($data->tahunakademik);
+
 			if ($jabatan->num_rows() > 0 ) {
 				$data->jabatan = $jabatan->row()->jabatan;
 			}else{

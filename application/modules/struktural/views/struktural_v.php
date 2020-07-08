@@ -82,7 +82,7 @@
 			var dataParse = JSON.parse(response);
 			if (typeof(dataParse.data) !== 'undefined') {
 				let res = dataParse.data
-					$('#textContent').text(`Sebagai ${res.jabatan}, pada tahun akademik ${res.tahunakademik}`);
+					$('#textContent').text(`Sebagai ${res.jabatan}, pada tahun akademik ${res.nama_tahunakademik}`);
 					$('#textContent').append(`
 						<a 
 							class="btn btn-danger pull-right" 
