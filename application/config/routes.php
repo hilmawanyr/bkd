@@ -49,6 +49,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['auth'] = 'auth';
+$route['login'] = 'auth/attemp_login';
+$route['logout'] = 'auth/logout';
+
+$route['pengajaran'] = 'pengajaran';
+$route['review-pengajaran'] = 'pengajaran/load_page';
+$route['daftar-pengajaran'] = 'pengajaran/daftar_pengajaran';
+$route['pengajaran-pertahun/(:num)'] = 'pengajaran/detail/$1';
+$route['ubah-pengajaran/(:num)'] = 'pengajaran/edit/$1';
+$route['update-pengajaran/(:num)'] = 'pengajaran/update/$1';
+$route['hapus-pengajaran/(:num)'] = 'pengajaran/remove/$1';
+
+$route['penelitian'] = 'penelitian';
+$route['tambah-penelitian'] = 'penelitian/add';
+$route['program-penelitian/(:any)'] = 'penelitian/program_activity/$1';
+$route['parameter-penelitian/(:any)'] = 'penelitian/program_params/$1';
+$route['sks-penelitian/(:any)/(:any)'] = 'penelitian/set_sks/$1/$2';
+$route['set-duration-category/(:any)'] = 'penelitian/duration_category/$1';
+$route['temp-rsc-table'] = 'penelitian/loadTable';
+$route['temp-research'] = 'penelitian/temporaryResearch';
+$route['rm-temp-row/(:num)'] = 'penelitian/deleteList/$1';
+$route['rsc-detail/(:num)/(:any)'] = 'penelitian/load_detail/$1/$2';
+$route['attach-doc/(:num)/(:any)'] = 'penelitian/attach_file/$1/$2';
+$route['submit-doc/(:any)'] = 'penelitian/submit_attachment/$1';
+$route['remove-doc-link/(:any)/(:any)'] = 'penelitian/remove_link/$1/$2';
+$route['remove-rsc/(:any)'] = 'penelitian/remove_research/$1';
+$route['edit/(:num)'] = 'penelitian/edit/$1';
+$route['update-rsc'] = 'penelitian/update';
+
+$route['pengabdian'] = 'pengabdian';
+$route['dev-program/(:any)'] = 'pengabdian/get_devotion_program/$1';
+$route['dev-param/(:any)'] = 'pengabdian/get_devotion_param/$1';
+$route['dev-credit/(:any)/(:any)'] = 'pengabdian/set_devotion_credit/$1/$2';
+$route['dev-temp-data'] = 'pengabdian/temporaryDevotion';
+$route['load-dev-temp'] = 'pengabdian/load_devotion_temp_table';
+$route['remove-temp-dev/(:num)'] = 'pengabdian/delete_temp_devotion/$1';
+$route['add-dev'] = 'pengabdian/add_devotion';
+$route['load-dev-list'] = 'pengabdian/load_list_page';
+$route['dev-edit/(:num)'] = 'pengabdian/edit/$1';
+$route['update-dev'] = 'pengabdian/update';
+$route['remove-dev/(:num)'] = 'pengabdian/remove/$1';
+$route['dev-by-year/(:any)'] = 'pengabdian/dev_on_year/$1';
+
+$route['form'] = 'form';
+$route['set-form-year'] = 'form/set_opt';
+$route['print-form'] = 'form/print_out_form';
