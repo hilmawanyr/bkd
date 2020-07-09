@@ -101,6 +101,7 @@ class Pengajaran extends CI_Controller {
 			}
 
 			$teachingData[] = [
+				'kode_transaksi'  => $this->_generateRandomString(),
 				'kode_pengajaran' => $components[$i],
 				'param1_type'     => $paramCode[ $components[$i] ][ $firstParam ][0],
 				'param1_value'    => $paramValue[ $components[$i] ][ $firstParam ][0],
@@ -115,6 +116,17 @@ class Pengajaran extends CI_Controller {
 		$this->db->insert_batch('pengajaran_tambahan_dosen', $teachingData);
 		$this->session->set_flashdata('success','Data berhasil disimpan! Anda dapat melihatnya dengan mengklik tombol Daftar Pengajaran Tambahan.');
 		redirect('pengajaran','refresh');
+	}
+
+	protected function _generateRandomString() : string
+	{
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < 10; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
 	}
 
 	public function daftar_pengajaran()
