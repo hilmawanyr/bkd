@@ -143,6 +143,14 @@ $username = $this->session->userdata('bkd_session')['username']; ?>
       'info'        : true,
       'autoWidth'   : false
     })
+    $('#dt-wo-hd').DataTable({
+      'paging'      : false,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
   })
 </script>
 </body>

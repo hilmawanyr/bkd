@@ -99,3 +99,9 @@ $route['dev-by-year/(:any)'] = 'pengabdian/dev_on_year/$1';
 $route['form'] = 'form';
 $route['set-form-year'] = 'form/set_opt';
 $route['print-form'] = 'form/print_out_form';
+
+$route['laporan-pengajaran'] = 'pengajaran/report_pengajaran';
+$route['pengajaran-claim-pertahun/(:any)'] = 'pengajaran/report_pengajaran/detail/$1';
+$route['claim-pengajaran/(:any)'] = 'pengajaran/report_pengajaran/claim/$1';
+$route['claim-flag/(:any)'] = 'pengajaran/report_pengajaran/flag/$1';
+$route['attach-teach-evidence'] = 'pengajaran/report_pengajaran/attach_file';
