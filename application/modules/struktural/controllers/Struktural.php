@@ -38,13 +38,14 @@ class Struktural extends CI_Controller {
 	{
 		$req = explode("-", $_POST['position']);
 		$position = $req[0];
-		$sks= $req[1];
+		$sks = $req[1];
 		$tahunakademik = active_year()->kode_tahun;
 
 		$condition = ['nid' => $this->userid, "tahunakademik" => $tahunakademik];
 		$exist = $this->data->find($this->table, $condition)->num_rows(); // check exist data before insert
 		
 		$data = [
+			'_key' => $this->_generateRandomString(),
 			'nid' => $this->userid,
 			'id_jabatan' => $position,
 			'tahunakademik' => $tahunakademik,
@@ -111,6 +112,22 @@ class Struktural extends CI_Controller {
 	    	redirect('struktural','refresh');
 		}
 	}
+
+	/**
+     * Generate random string
+     * 
+     * @return string
+     */
+    protected function _generateRandomString() : string
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 }
 
 /* End of file Struktural.php */
