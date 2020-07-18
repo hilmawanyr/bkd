@@ -114,3 +114,9 @@ $route['pengabdian-pertahun/(:num)'] = 'pengabdian/report_pengabdian/get_dev_per
 $route['attach-dev-doc/(:any)'] = 'pengabdian/report_pengabdian/attach_file/$1';
 $route['submit-dev-doc/(:any)'] = 'pengabdian/report_pengabdian/submit_proof_file/$1';
 $route['remove-dev-doc-link/(:any)/(:any)'] = 'pengabdian/report_pengabdian/remove_link/$1/$2';
+
+$route['laporan-jabatan-struktural'] = 'struktural/report_jabatan';
+$route['jabatan-pertahun/(:num)'] = 'struktural/report_jabatan/get_pos_peryear/$1';
+$route['attach-pos-doc/(:any)'] = 'struktural/report_jabatan/attach_file/$1';
+$route['submit-pos-doc/(:any)'] = 'struktural/report_jabatan/submit_proof_file/$1';
+$route['remove-pos-doc-link/(:any)/(:any)'] = 'struktural/report_jabatan/remove_link/$1/$2';
