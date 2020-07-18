@@ -73,13 +73,7 @@ class Research_model extends CI_Model {
 									rsc.tahunakademik, 
 									prg.program, 
 									act.kegiatan, 
-									prm.parameter,
-									(SELECT COUNT(*) FROM dokumen_penelitian 
-									WHERE kode_kegiatan = rsc.kegiatan 
-									AND kode_param = rsc.param) AS requirement,
-									(SELECT COUNT(*) FROM bukti_penelitian
-									WHERE key_penelitian = rsc.key
-									AND deleted_at IS NULL) AS attachment
+									prm.parameter
 								FROM penelitian_dosen rsc
 								JOIN program_penelitian prg ON rsc.program = prg.kode_program
 								JOIN kegiatan_penelitian act ON rsc.kegiatan = act.kode_kegiatan

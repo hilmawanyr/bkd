@@ -117,10 +117,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Petujuk penggunaan</h4>
+        <h4 class="modal-title">Petujuk Fitur</h4>
       </div>
       <div class="modal-body">
-        
+        <p>Daftar penelitian yang muncul pada halaman ini merupakan data penelitian yang Anda telah <i>input</i> sebelumnya di menu <code>Rencana > Penelitian</code>. Pada menu ini Anda diharuskan untuk melampirkan bukti penelitian berupa <b>link</b> atau <b>URL</b> dimana lokasi berkas bukti penelitian Anda diunggah. Aplikasi akan memberikan keterangan berupa:</p>
+        <ul>
+          <li>Dokumen belum dilampirkan</li>
+          <li>Dokumen belum lengkap, dan</li>
+          <li>Dokumen sudah lengkap</li>
+        </ul>
+        <p>Yang mana jika dokumen sudah lengkap maka tombol pada kolom <b>aksi</b> akan berubah menjadi berwarna biru dan bertuliskan <b>Waiting validation</b> yang artinya dokumen bukti penelitian Anda sedang dalam proses verifikasi oleh jajaran LPM (GPM dan SPM).</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

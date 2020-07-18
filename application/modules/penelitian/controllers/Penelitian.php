@@ -92,58 +92,10 @@ class Penelitian extends CI_Controller {
     	$this->load->view('rsc_list_v', $data);
     }
 
-    public function load_detail($id, $isEqual)
+    public function load_detail($id)
     {
-    	$is_equal = explode('-', $isEqual);
-    	$data['is_doc_complete'] = $is_equal[1] == 0 ? 0 : ($is_equal[0] != $is_equal[1] ? 1 : 2);
     	$data['rsc'] = $this->rsc->detail_rsc($id);
     	$this->load->view('rsc_modal_detail_v', $data);
-    }
-
-    public function attach_file($id, $isEqual)
-    {
-    	$rsc = $this->rsc->get_research($id);
-    	$data['doc_key'] = $rsc->key;
-    	$is_equal = explode('-', $isEqual);
-    	$data['is_doc_complete'] = $is_equal[1] == 0 ? 0 : ($is_equal[0] != $is_equal[1] ? 1 : 2);
-    	$data['data'] = $this->rsc->proof_doc($rsc->kegiatan, $rsc->param);
-    	$this->load->view('rsc_modal_upload_v', $data);
-    }
-
-    public function remove_link($doc, $key)
-    {
-    	$this->db->update('bukti_penelitian', ['deleted_at' => date('Y-m-d H:i:s')], ['kode_dokumen' => $doc, 'key_penelitian' => $key]);
-    	$this->session->set_flashdata('success', 'Link dokumen berhasil dihapus!');
-    	redirect('penelitian','refresh');
-    }
-
-    public function submit_attachment($doc_key)
-    {
-    	$this->_is_research_exist($doc_key);
-    	$attachment = $this->input->post('attachment');
-    	$doc_code = $this->input->post('doctype');
-    	for ($i = 0; $i < count($attachment); $i++) {
-    		if (!empty($attachment[$i])) {
-    			$data[] = [
-	    			'kode_dokumen' => $doc_code[$i],
-	    			'url' => $attachment[$i],
-	    			'key_penelitian' => $doc_key
-	     		];	
-    		}
-    	}
-    	$this->db->insert_batch('bukti_penelitian', $data);
-    	$this->session->set_flashdata('success', 'Bukti penelitian berhasil dilampirkan!');
-    	redirect('penelitian','refresh');
-    }
-
-    private function _is_research_exist($doc_key)
-    {
-    	$is_exist = $this->db->get_where('penelitian_dosen', ['key' => $doc_key])->num_rows();
-    	if ($is_exist == 0) {
-    		$this->session->set_flashdata('fail', 'Gagal melampirkan dokumen! Kode penelitian tidak valid.');
-    		redirect('penelitian','refresh');
-    	}
-    	return;
     }
 
     public function remove_research($key)
