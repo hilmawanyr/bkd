@@ -9,7 +9,7 @@
 				<div class="col-md-6 col-xs-12">
 					<div class="callout">
 						<label for="exampleInputFile"><?= $docs->jenis ?></label>
-						<?php $is_doc_exist = $this->rsc->is_research_has_doc($doc_key, $docs->kode);
+						<?php $is_doc_exist = $this->rrscm->is_research_has_doc($doc_key, $docs->kode);
 						if ($is_doc_exist->num_rows() > 0) : ?>
 						 	<a href="<?= $is_doc_exist->row()->url ?>" style="color: #001F3F">
 						 		<?= $is_doc_exist->row()->url ?>

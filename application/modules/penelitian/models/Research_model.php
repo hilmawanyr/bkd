@@ -114,7 +114,7 @@ class Research_model extends CI_Model {
 
 	public function get_research($id)
 	{
-		return $this->db->get_where('penelitian_dosen', ['id' => $id])->row();
+		return $this->db->limit(1)->get_where('penelitian_dosen', ['key' => $key])->row();
 	}
 
 	public function proof_doc($act, $param)

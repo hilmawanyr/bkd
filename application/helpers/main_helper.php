@@ -11,7 +11,7 @@
 			
 			default:
 				echo "<pre>";
-				print_r ($message);
+				var_dump ($message);
 				echo "</pre>";
 				die();
 				break;
