@@ -6,7 +6,6 @@
       <th>Judul</th>
       <th>Program</th>
       <th>Kegiatan</th>
-      <th>Keterangan</th>
       <th width="160" style="text-align: center;">Aksi</th>
     </tr>
   </thead>
@@ -18,29 +17,13 @@
         <td><?= $rsc->program ?></td>
         <td><?= $rsc->kegiatan ?></td>
         <td>
-          <?= $rsc->attachment > 0 ?
-                ($rsc->requirement != $rsc->attachment ?
-                  '<span class="badge bg-orange">Dokumen belum lengkap</span>' :
-                  '<span class="badge bg-green">Dokumen sudah lengkap</span>') :
-                '<span class="badge bg-default">Dokumen belum dilampirkan</span>'; ?>
-        </td>
-        <td>
           <span data-toggle="tooltip" title="Detail">
             <button 
               class="btn btn-sm bg-olive" 
               data-toggle="modal" 
               data-target="#myModal" 
-              onclick="load_detail(<?= $rsc->id ?>,'<?= $rsc->requirement.'-'.$rsc->attachment ?>')">
+              onclick="load_detail(<?= $rsc->id ?>)">
               <i class="fa fa-list"></i>
-            </button>
-          </span>
-          <span data-toggle="tooltip" title="Lampirkan dokumen">
-            <button 
-              class="btn btn-sm bg-orange" 
-              data-toggle="modal" 
-              data-target="#myModal" 
-              onclick="doc_upload(<?= $rsc->id ?>,'<?= $rsc->requirement.'-'.$rsc->attachment ?>')">
-              <i class="fa fa-upload"></i>
             </button>
           </span>
           <span data-toggle="tooltip" title="Edit">
@@ -79,12 +62,8 @@
     $('[data-toggle="tooltip"]').tooltip({trigger: "hover"});
   });
 
-  function load_detail(id,is_equal) {
-    $('#content').load('<?= base_url('rsc-detail/') ?>' + id + '/' + is_equal)
-  }
-
-  function doc_upload(id, is_equal) {
-    $('#content').load('<?= base_url('attach-doc/') ?>' + id + '/' + is_equal)
+  function load_detail(id) {
+    $('#content').load('<?= base_url('rsc-detail/') ?>' + id)
   }
 
   function edit(id) {
