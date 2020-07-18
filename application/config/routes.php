@@ -108,3 +108,9 @@ $route['penelitian-claim-pertahun/(:any)'] = 'penelitian/report_penelitian/detai
 $route['attach-doc/(:any)/(:any)'] = 'penelitian/report_penelitian/attach_file/$1/$2';
 $route['submit-doc/(:any)'] = 'penelitian/report_penelitian/submit_attachment/$1';
 $route['remove-doc-link/(:any)/(:any)'] = 'penelitian/report_penelitian/remove_link/$1/$2';
+
+$route['laporan-pengabdian'] = 'pengabdian/report_pengabdian';
+$route['pengabdian-pertahun/(:num)'] = 'pengabdian/report_pengabdian/get_dev_peryear/$1';
+$route['attach-dev-doc/(:any)'] = 'pengabdian/report_pengabdian/attach_file/$1';
+$route['submit-dev-doc/(:any)'] = 'pengabdian/report_pengabdian/submit_proof_file/$1';
+$route['remove-dev-doc-link/(:any)/(:any)'] = 'pengabdian/report_pengabdian/remove_link/$1/$2';
