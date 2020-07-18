@@ -118,7 +118,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Lampirkan Link Dokumen Bukti</h4>
       </div>
-      <form action="<?= base_url('attach-teach-evidence') ?>" method="post" class="form-horizontal">
+      <form action="<?= base_url('attach-teach-evidence') ?>" method="post" onsubmit="return confirm('Link yang telah diunggah tidak dapat diubah, pastikan link tersebut telah benar! Lanjutkan pengunggahan?')" class="form-horizontal">
         <div class="modal-body">
           <div class="form-group">
             <label for="" class="control-label col-sm-2">URL</label>

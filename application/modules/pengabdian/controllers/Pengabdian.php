@@ -176,6 +176,7 @@ class Pengabdian extends CI_Controller {
     	$programAmount = count($program);
     	for ($i = 0; $i < $programAmount; $i++) {
     		$devotionList[] = [
+                '_key'          => $this->_generateRandomString(),
 				'nid'           => $this->userid,
 				'tahunakademik' => $tahunakademik[$i],
 				'type'          => $type[$i],
@@ -287,6 +288,22 @@ class Pengabdian extends CI_Controller {
     {
     	$data['dev'] = $this->dev->list_all($this->userid, $year);
 		$this->load->view('daftar_pengabdian_mod', $data);
+    }
+
+    /**
+     * Generate random string
+     * 
+     * @return string
+     */
+    protected function _generateRandomString() : string
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
 }
