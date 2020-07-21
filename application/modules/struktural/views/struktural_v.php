@@ -9,21 +9,21 @@
 <section class="content">
   	<div class="row">
     	<div class="col-xs-12">
+			<?php $this->load->view('template/message_alert'); ?>
 			<div class="box box-primary">
-				<?php $this->load->view('template/message_alert'); ?>
 			    <div class="box-header with-border">
 			      	<h3 class="box-title">Tambah Data</h3>
 			    </div>
 
-			    <div class="box-body">
-			      	<form class="form-horizontal" action="<?= base_url('struktural/store') ?>" method="post">
+			    <form class="form-horizontal" action="<?= base_url('struktural/store') ?>" method="post">
+				    <div class="box-body">
 						<div class="form-group">
 							<label for="position" class="col-sm-2 control-label">Jabatan Struktural</label>
 							<div class="col-sm-10">
 								<select name="position" id="position" class="form-control" required="">
 									<option disabled="" selected="" value="">-- Pilih Jabatan --</option>
 									<?php foreach ($jabatan as $other) { ?>
-										<option value="<?= $other->id.'-'.$other->sks ?>"><?= $other->jabatan ?></option>
+										<option value="<?= $other->id.'-'.$other->sks.'-'.$other->kode ?>"><?= $other->jabatan ?></option>
 									<?php } ?>
 								</select>
 							</div>
@@ -35,15 +35,15 @@
 								<input type="text" name="sks" readonly="" value="" id="sks" class="form-control" placeholder="SKS">
 							</div>
 						</div>
-					</form>
-			    </div>
+				    </div>
 
-			    <div class="box-footer text-center">
-					<button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Tambah</button>
-					<a href="#otherInfo" class="btn bg-olive" data-toggle="modal" onclick="load_structural_position()">
-						<i class="fa fa-eye"></i> Lihat Data Tersimpan
-					</a>
-			    </div>
+				    <div class="box-footer text-center">
+						<button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Tambah</button>
+						<a href="#otherInfo" class="btn bg-olive" data-toggle="modal" onclick="load_structural_position()">
+							<i class="fa fa-eye"></i> Lihat Data Tersimpan
+						</a>
+				    </div>
+				</form>
 			</div>
 		</div>
 	</div>

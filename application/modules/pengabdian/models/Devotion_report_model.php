@@ -14,7 +14,7 @@ class Devotion_report_model extends CI_Model {
 								FROM abdimas_dosen ad
 								JOIN abdimas ab ON ab.`kode` = ad.`type`
 								JOIN abdimas_program ap ON ap.`kode_program` = ad.`program`
-								JOIN abdimas_parameter pr ON pr.`kode` = ad.`param`
+								LEFT JOIN abdimas_parameter pr ON pr.`kode` = ad.`param`
 								LEFT JOIN bukti_pengabdian bk ON ad.`_key` = bk.`_key`
 								WHERE ad.`nid` = '{$nid}'
 								AND ad.`tahunakademik` = '{$tahunakademik}'

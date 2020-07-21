@@ -19,7 +19,7 @@
           } elseif (!is_null($teach->tsc_rep) && is_null($teach->tsc_url)) {
             echo '<a class="btn btn-xs bg-orange" style="cursor: text">Claimed</a>';
           } elseif (!is_null($teach->tsc_rep) && !is_null($teach->tsc_url)) {
-            echo '<a class="btn btn-xs bg-green" href="'.$teach->tsc_url.'">Document attached <i class="fa fa-external-link"></i></a>';
+            echo '<a class="btn btn-xs bg-green" target="_blank" href="'.$teach->tsc_url.'">Document attached <i class="fa fa-external-link"></i></a>';
           } ?>
         </td>
 

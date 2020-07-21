@@ -23,20 +23,26 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title"><i class="fa fa-list-alt"></i> Pengajaran Tambahan</h3>
+        </div>
         <div class="box-body">
           <?php $this->load->view('template/message_alert'); ?>
-          <div class="row">
-            <div class="col-md-4 col-xs-12">
-              <select class="form-control" id="year-choice">
-                <option disabled="" selected="" value="">-- Pilih Tahun Ajaran --</option>
-                <?php foreach ($year_list as $year) : ?>
-                  <option 
-                    value="<?= $year->kode ?>"
-                    <?= active_year()->kode_tahun == $year->kode ? 'selected=""' : ''; ?>>
-                    <?= $year->tahun_akademik ?>
-                  </option>
-                <?php endforeach; ?>
-              </select>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label for="tahunajaran" class="control-label col-xs-2">Tahun Akademik</label>
+              <div class="col-md-8 col-xs-12">
+                <select class="form-control" id="year-choice">
+                  <option disabled="" selected="" value="">-- Pilih Tahun Ajaran --</option>
+                  <?php foreach ($year_list as $year) : ?>
+                    <option 
+                      value="<?= $year->kode ?>"
+                      <?= active_year()->kode_tahun == $year->kode ? 'selected=""' : ''; ?>>
+                      <?= $year->tahun_akademik ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
             </div>
           </div>
           <span id="table-show-here">
@@ -54,7 +60,7 @@
                   <tr>
                     <td><?= $no; ?></td>
                     <td><?= $teach->komponen ?></td>
-                    <td><?= $teach->sks ?></td>
+                    <td><?= number_format($teach->sks, 2) ?></td>
                     <td>
                       <span data-toggle="tooltip" title="ubah">
                         <button 

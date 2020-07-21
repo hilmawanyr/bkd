@@ -120,3 +120,11 @@ $route['jabatan-pertahun/(:num)'] = 'struktural/report_jabatan/get_pos_peryear/$
 $route['attach-pos-doc/(:any)'] = 'struktural/report_jabatan/attach_file/$1';
 $route['submit-pos-doc/(:any)'] = 'struktural/report_jabatan/submit_proof_file/$1';
 $route['remove-pos-doc-link/(:any)/(:any)'] = 'struktural/report_jabatan/remove_link/$1/$2';
+
+$route['home/data-ajar'] = 'home/total_pengajaran';
+$route['home/sks-ajar'] = 'home/sks_pengajaran';
+$route['home/data-penelitian'] = 'home/total_penelitian';
+$route['home/sks-penelitian'] = 'home/sks_penelitian';
+$route['home/data-abdimas'] = 'home/total_abdimas';
+$route['home/sks-abdimas'] = 'home/sks_abdimas';
+$route['home/data-jabatan'] = 'home/position';
