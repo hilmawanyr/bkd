@@ -258,6 +258,7 @@ class Pengabdian extends CI_Controller {
     public function remove($id)
     {
     	$this->_is_dev_exist($id);
+        $this->_is_has_report($id);
 
     	$this->db->update('abdimas_dosen', ['deleted_at' => date('Y-m-d H:i:s')], ['id' => $id]);
     	$this->session->set_flashdata('success', 'Data pengabdian berhasil dihapus!');
@@ -277,6 +278,22 @@ class Pengabdian extends CI_Controller {
     		redirect('pengabdian','refresh');
     	}
     	return;
+    }
+
+    /**
+     * Check whether report is exist or no by its id
+     * @param int $id
+     * @return void
+     */
+    private function _is_has_report($id)
+    {
+        $get_key = $this->db->get_where('abdimas_dosen', ['id' => $id])->row()->_key;
+        $is_exist = $this->db->get_where('bukti_pengabdian', ['_key' => $get_key])->num_rows();
+        if ($is_exist == 1) {
+            $this->session->set_flashdata('fail', 'Tidak dapat menghapus data! Data pengabdian telah dilaporkan selesai!');
+            redirect('pengabdian','refresh');
+        }
+        return;
     }
 
     /**

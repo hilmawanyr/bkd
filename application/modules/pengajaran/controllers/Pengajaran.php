@@ -164,7 +164,9 @@ class Pengajaran extends CI_Controller {
 			$data2['param'.($i+1).'_value'] = $param[$i];
 		}
 
-		$finaldata = array_merge($data1, $data2);
+		$data3['updated_at'] = date('Y-m-d H:i:s');
+
+		$finaldata = array_merge($data1, $data2, $data3);
 		$this->db->update('pengajaran_tambahan_dosen', $finaldata, ['id' => $id]);
 		$this->session->set_flashdata('success', 'Data berasil diperbarui!');
 		redirect(base_url('daftar-pengajaran'),'refresh');
@@ -179,7 +181,7 @@ class Pengajaran extends CI_Controller {
 
 		} elseif ($kode == 'COM5') {
 			$getsks  = $this->db->get_where('pengajaran_tambahan', ['kode_pengajaran' => $kode])->row()->sks;
-			$formula = (($value / 4) * $sgetks);
+			$formula = (($value / 4) * $getsks);
 			return floatval($formula);
 
 		} elseif ($kode == 'COM7') {
@@ -195,6 +197,8 @@ class Pengajaran extends CI_Controller {
 	public function remove($id)
 	{
 		$this->_is_id_exist($id, 'Gagal menghapus data! Komponen tidak ditemukan.');
+		$this->_is_has_report($id, 'Tidak dapat menghapus data! Komponen telah dilaporkan selesai.');
+
 		$this->db->update('pengajaran_tambahan_dosen', ['deleted_at' => date('Y-m-d H:i:s')], ['id' => $id]);
 		$this->session->set_flashdata('success', 'Data berasil dihapus!');
 		redirect(base_url('daftar-pengajaran'),'refresh');
@@ -204,6 +208,17 @@ class Pengajaran extends CI_Controller {
 	{
 		$is_exist = $this->db->get_where('pengajaran_tambahan_dosen', ['id' => $id])->num_rows();
 		if ($is_exist == 0) {
+			$this->session->set_flashdata('fail', $message);
+			redirect(base_url('daftar-pengajaran'));
+		}
+		return;
+	}
+
+	protected function _is_has_report(int $id, string $message='')
+	{
+		$get_transaction_code = $this->db->get_where('pengajaran_tambahan_dosen', ['id' => $id])->row()->kode_transaksi;
+		$is_report_exist = $this->db->get_where('laporan_pengajaran', ['kode_transaksi' => $get_transaction_code])->num_rows();
+		if ($is_report_exist == 1) {
 			$this->session->set_flashdata('fail', $message);
 			redirect(base_url('daftar-pengajaran'));
 		}

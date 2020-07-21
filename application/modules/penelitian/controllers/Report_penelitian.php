@@ -62,7 +62,7 @@ class Report_penelitian extends CI_Controller {
     	$is_exist = $this->db->get_where('penelitian_dosen', ['key' => $doc_key])->num_rows();
     	if ($is_exist == 0) {
     		$this->session->set_flashdata('fail', 'Gagal melampirkan dokumen! Kode penelitian tidak valid.');
-    		redirect('penelitian','refresh');
+    		redirect('laporan-penelitian','refresh');
     	}
     	return;
     }
@@ -71,7 +71,7 @@ class Report_penelitian extends CI_Controller {
     {
     	$this->db->update('bukti_penelitian', ['deleted_at' => date('Y-m-d H:i:s')], ['kode_dokumen' => $doc, 'key_penelitian' => $key]);
     	$this->session->set_flashdata('success', 'Link dokumen berhasil dihapus!');
-    	redirect('penelitian','refresh');
+    	redirect('laporan-penelitian','refresh');
     }
 
 }

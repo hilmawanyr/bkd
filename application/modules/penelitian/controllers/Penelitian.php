@@ -100,9 +100,20 @@ class Penelitian extends CI_Controller {
 
     public function remove_research($key)
     {
+    	$this->_is_has_report($key);
     	$this->db->update('penelitian_dosen', ['deleted_at' => date('Y-m-d H:i:s')], ['key' => $key]);
     	$this->session->set_flashdata('success', 'Penelitian berhasil dihapus!');
     	redirect('penelitian','refresh');
+    }
+
+    protected function _is_has_report($key)
+    {
+    	$is_report_exist = $this->db->get_where('bukti_penelitian', ['key_penelitian' => $key, 'deleted_at IS NULL' => NULL])->num_rows();
+    	if ($is_report_exist > 0) {
+    		$this->session->set_flashdata('fail', 'Tidak dapat menghapus penelitian! Data memiliki laporan selesai.');
+    		redirect('penelitian','refresh');
+    	}
+    	return;
     }
 
     public function edit($id)

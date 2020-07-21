@@ -9,7 +9,8 @@ class Report_struktural_model extends CI_Model {
 								JOIN jabatan_struktural js ON js.`kode` = sd.`kode_jabatan`
 								LEFT JOIN bukti_jabatan bj ON bj.`_key` = sd.`_key`
 								WHERE sd.`nid` = '{$nid}'
-								AND sd.`tahunakademik` = '{$tahunakademik}'")->result();
+								AND sd.`tahunakademik` = '{$tahunakademik}'
+								AND sd.`deleted_at` IS NULL")->result();
 		return $data;		
 	}	
 

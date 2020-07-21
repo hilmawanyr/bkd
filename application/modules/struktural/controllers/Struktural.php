@@ -39,15 +39,17 @@ class Struktural extends CI_Controller {
 		$req = explode("-", $_POST['position']);
 		$position = $req[0];
 		$sks = $req[1];
+		$kode = $req[2];
 		$tahunakademik = active_year()->kode_tahun;
 
-		$condition = ['nid' => $this->userid, "tahunakademik" => $tahunakademik];
+		$condition = ['nid' => $this->userid, "tahunakademik" => $tahunakademik, 'deleted_at IS NULL' => NULL];
 		$exist = $this->data->find($this->table, $condition)->num_rows(); // check exist data before insert
 		
 		$data = [
 			'_key' => $this->_generateRandomString(),
 			'nid' => $this->userid,
 			'id_jabatan' => $position,
+			'kode_jabatan' => $kode,
 			'tahunakademik' => $tahunakademik,
 			'sks' => $sks,
 			'status' => null,
@@ -73,7 +75,7 @@ class Struktural extends CI_Controller {
 	{
 		$response = ['code' => 204, "message" => "Not Found...",];
 
-		$condition = ['nid' => $this->userid, 'tahunakademik' => active_year()->kode_tahun];
+		$condition = ['nid' => $this->userid, 'tahunakademik' => active_year()->kode_tahun, 'deleted_at IS NULL' => NULL];
 		$data = $this->data->find($this->table, $condition);
 
 		if ($data->num_rows() > 0) {
@@ -101,16 +103,33 @@ class Struktural extends CI_Controller {
 	//Delete one item
 	public function remove( $id = NULL )
 	{
-		$exist = $this->data->find($this->table, $id)->num_rows();
+		$exist = $this->data->find($this->table, $id);
+		$this->_is_has_report($exist->row()->_key);
 
-		if ($exist) {
-			$this->data->delete($this->table, ['id' => $id]);
+		if ($exist->num_rows()) {
+			$this->db->update($this->table, ['deleted_at' => date('Y-m-d H:i:s')], ['id' => $id]);
 			$this->session->set_flashdata('success', 'Jabatan struktural berhasil dihapus !');
 	    	redirect('struktural','refresh');
 		}else{
 			$this->session->set_flashdata('danger', 'Jabatan struktural gagal dihapus !');
 	    	redirect('struktural','refresh');
 		}
+	}
+
+	/**
+	 * Check whether data has a report of completeness
+	 * 
+	 * @param int $id
+	 * @return void
+	 */
+	protected function _is_has_report(string $key) : void
+	{
+		$get_key = $this->db->get_where('bukti_jabatan', ['_key' => $key])->num_rows();
+		if ($get_key > 0) {
+			$this->session->set_flashdata('fail', 'Tidak dapat menghapus data! Jabatan memiliki laporan selesai.');
+	    	redirect('struktural','refresh');			
+		}
+		return;
 	}
 
 	/**

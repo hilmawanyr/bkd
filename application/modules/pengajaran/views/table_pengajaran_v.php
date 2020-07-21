@@ -12,7 +12,7 @@
       <tr>
         <td><?= $no; ?></td>
         <td><?= $teach->komponen ?></td>
-        <td><?= $teach->sks ?></td>
+        <td><?= number_format($teach->sks, 2) ?></td>
         <td>
           <span data-toggle="tooltip" title="ubah komponen">
             <button 
